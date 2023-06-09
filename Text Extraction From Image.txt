@@ -1,0 +1,46 @@
+from tkinter import *
+from PIL import Image, ImageTk
+from tkinter import ttk, filedialog
+import os
+import pytesseract
+
+def showimage():
+    fln = filedialog.askopenfilename(filetypes=[('image', '*.png & *.jpg & *.jpeg')])
+    img = Image.open(fln)
+    output_file = "textfile.txt"
+    data = (pytesseract.image_to_string(img))
+    text_file = open(output_file, 'w')
+    text_file.write(data)
+    text_file.close()
+    os.startfile(output_file)
+    img.close()
+
+root = Tk()
+
+root.geometry('1920x1080')
+root.title("IMAGE INTO TEXT")
+frm = Frame(root)
+frm.pack(side=BOTTOM, padx=20, pady=20)
+lbl = Label(root)
+lbl.pack()
+
+frame = Frame(root, width=400, height=200)
+frame.pack()
+frame.place(anchor='center', relx=0.5, rely=0.5)
+label = Label(root, text="IMAGE INTO TEXT", width=20, font=('Algerian 20'), foreground="red")
+label.place(x=520, y=60)
+
+photo = ImageTk.PhotoImage(Image.open("logo.jpg"))
+label = Label(frame, image=photo)
+label.pack()
+
+label = Label(root, text="Click the Button to Browse the Image", font=('TimesNewRoman 13'), foreground="brown")
+label.place(x=100, y=100)
+label.pack(pady=170)
+ttk.Button(root, text="Browse", command=showimage,).pack(pady=130)
+
+root.mainloop()
+
+
+
+
